@@ -4,6 +4,8 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final flutterWebviewPlugin = new FlutterWebviewPlugin();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,7 +13,24 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: MyHomePage(title: 'Differ App'),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Differ App'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.autorenew),
+              tooltip: 'Refresh Web View',
+              onPressed: () {
+                print('Reloading WebView');
+                flutterWebviewPlugin.reload();
+              },
+            ),
+          ],
+        ),
+        body: Container(
+          child: MyHomePage(title: 'Differ App'),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -29,9 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       url: "http://app.productosdiffer.com/vendedores/"
     );
   }
